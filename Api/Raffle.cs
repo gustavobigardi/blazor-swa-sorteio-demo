@@ -25,17 +25,24 @@ namespace Api
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            try
+            {
+                log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var user = (await _context.Users.ToListAsync()).OrderBy(o => Guid.NewGuid()).FirstOrDefault();
-            
-            if (user != null)
+                var user = (await _context.Users.ToListAsync()).OrderBy(o => Guid.NewGuid()).FirstOrDefault();
+                
+                if (user != null)
+                {
+                    return new OkObjectResult(user);
+                }
+                else
+                {
+                    return new NoContentResult();
+                }
+            } 
+            catch (Exception ex)
             {
-                return new OkObjectResult(user);
-            }
-            else
-            {
-                return new NoContentResult();
+                return new BadRequestObjectResult(ex.Message);
             }
         }
     }
