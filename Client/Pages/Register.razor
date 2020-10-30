@@ -23,7 +23,7 @@
 
     private async Task HandleValidSubmit()
     {
-        var response = await Http.PostAsJsonAsync("http://localhost:7071/api/Register", UserModel);
+        var response = await Http.PostAsJsonAsync("/api/Register", UserModel);
 
         if (response.IsSuccessStatusCode)
         {

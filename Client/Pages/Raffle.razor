@@ -12,7 +12,7 @@
 
     private async Task RaffleUser()
     {
-        var response = await Http.GetFromJsonAsync<User>("http://localhost:7071/api/Raffle");
+        var response = await Http.GetFromJsonAsync<User>("/api/Raffle");
 
         if (response != null)
         {
