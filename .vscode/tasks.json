@@ -86,7 +86,7 @@
             "options": {
                 "cwd": "${workspaceFolder}/Api/bin/Debug/netcoreapp3.1"
             },
-            "command": "host start",
+            "command": "host start --cors *",
             "isBackground": true,
             "problemMatcher": "$func-dotnet-watch"
         }

@@ -1,0 +1,38 @@
+@page "/register"
+@inject HttpClient Http
+
+<h2>Cadastro</h2>
+<h4>@result</h4>
+
+<EditForm Model="@UserModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="name">Nome:</label>
+    <InputText id="name" @bind-Value="UserModel.Name" />
+    <br/>
+    <label for="email">Email:</label>
+    <InputText id="Email" @bind-Value="UserModel.Email" />
+
+    <button type="submit">Cadastrar</button>
+</EditForm>
+
+@code {
+    private User UserModel = new User();
+    private string result = "";
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await Http.PostAsJsonAsync("http://localhost:7071/api/Register", UserModel);
+
+        if (response.IsSuccessStatusCode)
+        {
+            result = "Cadastro realizado com sucesso!";
+        }
+        else
+        {
+            result = "Erro: " + (await response.Content.ReadAsStringAsync());
+        }
+        StateHasChanged();
+    }
+}

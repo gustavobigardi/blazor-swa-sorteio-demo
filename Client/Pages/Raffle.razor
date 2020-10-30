@@ -1,0 +1,24 @@
+@page "/raffle"
+@inject HttpClient Http
+
+<h2>Sorteio</h2>
+
+<button type="button" @onclick="RaffleUser">Sortear</button>
+
+<h4>@result</h4>
+
+@code {
+    private string result = "";
+
+    private async Task RaffleUser()
+    {
+        var response = await Http.GetFromJsonAsync<User>("http://localhost:7071/api/Raffle");
+
+        if (response != null)
+        {
+            result = $"{response.Name} - {response.Email}";
+        }
+
+        StateHasChanged();
+    }
+}
